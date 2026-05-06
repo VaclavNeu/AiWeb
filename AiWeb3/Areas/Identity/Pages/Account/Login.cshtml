@@ -1,0 +1,60 @@
+﻿@page
+@model LoginModel
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AiWeb3.Components.Pages.HomeText> _localizer
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+
+<section class="hero-wrap py-5 min-vh-75 d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="hero-panel rounded-4 p-4 p-lg-5 shadow-lg">
+                    <h1 class="text-center mb-1">@_localizer["Login"]</h1>
+                    <p class="text-center text-muted mb-4">@_localizer["EnterEmail"]</p>
+
+                    <form id="account" method="post" class="vstack gap-3">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3" role="alert"></div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                            <label asp-for="Input.Email" class="form-label">Email</label>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                            <label asp-for="Input.Password" class="form-label">@_localizer["Password"]</label>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" asp-for="Input.RememberMe" />
+                            <label class="form-check-label" asp-for="Input.RememberMe">
+                                @_localizer["RememberMe"]
+                            </label>
+                        </div>
+                        <input type="hidden" name="ReturnUrl" value="/home" />
+                        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary mb-3">
+                            @_localizer["Login"]
+                        </button>
+
+                        <div class="d-flex flex-column gap-3 text-center">
+                            <a id="forgot-password" asp-page="./ForgotPassword">@_localizer["ForgotPassword"]</a>
+                            <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">@_localizer["RegisterNewUser"]</a>
+                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">@_localizer["ResEmailVerif"]</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+   
+}

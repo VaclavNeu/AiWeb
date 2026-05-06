@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+@rendermode InteractiveServer
+
+<HeadContent>
+   
+
+</HeadContent>
+
+
+  
+   
+
+
+<nav id="topNav" class="navbar navbar-expand-lg nav-blur fixed-top" >
+    <div class="container">
+      <a class="navbar-brand  brand-tight" href="/">AiWeb</a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+            <ul class="navbar-nav align-items-lg-center gap-lg-3">
+               <li class="nav-item">
+                     <NavLink class="nav-link" href="/" Match="NavLinkMatch.Prefix">
+                         Co je AiWeb
+                     </NavLink>
+                     </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="/home" Match="NavLinkMatch.All">
+                        Vyzkoušet
+                    </NavLink>
+                </li>
+              
+               
+
+                <AuthorizeView>
+                    <Authorized>
+                        <li class="nav-item">
+                            <span class="nav-link small text-white-50" >
+                                <a class="nav-link small" href="/Identity/Account/AccountInfo" title="Můj účet">
+                                <i class="bi bi-person-circle me-1" ></i>@context.User.Identity?.Name
+                                </a>
+                            </span>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" action="/account/logout" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-light">
+                                    <i class="bi bi-box-arrow-right me-1"></i> Odhlásit
+                                </button>
+                            </form>
+                        </li>
+                    </Authorized>
+                    <NotAuthorized>
+                        <li class="nav-item">
+                            <a class="btn btn-sm btn-light" href="/Identity/Account/Register">Registrovat</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-sm btn-light"
+                               href="/Identity/Account/Login?returnUrl=@Uri.EscapeDataString(GetLocalReturnUrl())">
+                                <i class="bi bi-box-arrow-in-right me-1"></i> Přihlásit
+                            </a>
+                        </li>
+                    </NotAuthorized>
+                </AuthorizeView>
+                <li class="nav-item">
+                    <button class="btn btn-sm btn-light" @onclick="ToggleTheme" title="Přepnout světelný režim">
+                        <i class="bi bi-sun-fill icon-theme icon-dark"></i>
+                        <i class="bi bi-moon-stars-fill icon-theme icon-light"></i>
+
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="navbar-spacer" style="height: 50px"></div>
+
+@code {
+   
+
+    private async Task ToggleTheme() => await JS.InvokeVoidAsync("theme.toggle");
+
+
+
+    private string GetLocalReturnUrl()
+    {
+        var rel = Nav.ToBaseRelativePath(Nav.Uri);
+        if (string.IsNullOrWhiteSpace(rel)) return "/";
+        return "/" + rel;
+    }
+
+
+}

@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="/" />
+
+  <!-- 1) Nastav theme ještě před CSS (bez bliknutí) -->
+  <script>
+    (function(){
+      try{
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+          localStorage.setItem('theme', t);
+        }
+        document.documentElement.setAttribute('data-bs-theme', t);
+      } catch(e){}
+    })();
+  </script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="AiWeb3.styles.css" />
+  <link rel="icon" type="image/png" href="favicon.png" />
+
+  <HeadOutlet />
+</head>
+<body>
+  <CascadingAuthenticationState>
+    <Routes />
+  </CascadingAuthenticationState>
+
+  <!-- Skripty -->
+  <script src="js/interop.js"></script>
+  <script src="/js/theme.js"></script>  <!-- poskytuje window.theme.toggle() -->
+  <script src="_framework/blazor.web.js"></script>
+</body>
+</html>

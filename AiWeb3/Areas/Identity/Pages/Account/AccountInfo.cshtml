@@ -1,0 +1,115 @@
+﻿@page
+@model AiWeb3.Areas.Identity.Pages.Account.AccountInfoModel
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<AiWeb3.Components.Pages.HomeText> L
+@{
+    ViewData["Title"] = "Informace o uctu";
+}
+
+<section class="hero-wrap py-5 min-vh-75 d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="hero-panel rounded-4 p-4 p-lg-5 shadow-lg">
+
+                    <h1 class="text-center mb-1">@L["HereAreYourAccountDetails"]</h1>
+                   
+
+                    @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+                    {
+                        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                    }
+                    @if (!string.IsNullOrEmpty(TempData["SuccessMessage"] as string))
+                    {
+                        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                    }
+
+
+                    <div class="list-group mb-4">
+                        <div class="list-group-item d-flex justify-content-between">
+                            <span>@L["Email"]</span>
+                            <span class="fw-semibold">@Model.Email</span>
+                        </div>
+                     
+                        
+                        <div class="list-group-item d-flex justify-content-between">
+                            <span>@L["EmailConfirmed"]</span>
+                            <span class="fw-semibold">@(Model.EmailConfirmed? L["Yes"] : L["No"])</span>
+                        </div>
+                        
+                    </div>
+
+                    <div class="d-grid gap-2">
+                       
+                        @if (!Model.ShowChangePassword)
+                        {
+                            <form method="post" asp-page-handler="ShowChangePassword" asp-antiforgery="true">
+                                <button type="submit" class="btn btn-outline-primary w-100">
+                                    @L["ChangePassword"]
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post" asp-page-handler="ChangePassword" asp-antiforgery="true">
+                                
+                                <div class="list-group mb-3">
+
+                                    <div class="list-group-item">
+                                        <label class="form-label">@L["CurrentPassword"]</label>
+                                        <input asp-for="Input.CurrentPassword" class="form-control" type="password" />
+                                        <span asp-validation-for="Input.CurrentPassword" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="list-group-item">
+                                        
+                                        <label class="form-label">@L["NewPassword"]</label>
+                                        
+                                        <input asp-for="Input.NewPassword" class="form-control" type="password" />
+                                        @if (!ViewData.ModelState.IsValid)
+                                        {
+                                            <div asp-validation-summary="All" class="text-danger"></div>
+                                        }
+                                        <span asp-validation-for="Input.NewPassword" class="text-danger"></span>
+                                        
+                                    </div>
+
+                                    <div class="list-group-item">
+                                        <label class="form-label">@L["ConfirmNewPassword"]</label>
+                                        <input asp-for="Input.ConfirmNewPassword" class="form-control" type="password" />
+                                        <span asp-validation-for="Input.ConfirmNewPassword" class="text-danger"></span>
+                                    </div>
+
+                                
+
+                                <div class="d-grid gap-2 mt-3">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        @L["Save"]
+                                    </button>
+
+                                        <a class="btn btn-light w-100"
+                                           asp-area="Identity"
+                                           asp-page="/Account/AccountInfo">
+                                            @L["Cancel"]
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                        <form method="post" asp-page="./AccountInfo" asp-page-handler="Delete" asp-antiforgery="true" onsubmit="return confirm('Opravdu smazat ucet?');">
+                            <button type="submit" class="btn-danger btn w-100">
+                                @L["DeleteAccount"]
+                            </button>
+                        </form>
+                       
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

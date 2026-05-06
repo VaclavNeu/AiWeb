@@ -1,0 +1,354 @@
+<html lang="cs"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title data-ai="pageTitle">Vítejte na webu o kočkách</title>
+
+    <!-- volitelné: pokud máš base.css -->
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        /* Barvy dosadíme přes :root (přepíšeme injekcí ve službě) */
+        :root {
+            --accent-600: #2563eb;
+            --accent-400: #60a5fa;
+            --bg: #ffffff;
+            --text: #111827;
+            --muted: #6b7280;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui,Arial,sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6
+        }
+
+        .announce {
+            background: var(--accent-400);
+            color: #fff;
+            padding: 8px 0;
+            text-align: center
+        }
+
+        .site-header {
+            display: flex;
+            gap: 20px; 
+            align-items: center;
+            padding: 14px 20px;
+            background: #fff
+        }
+
+            .site-header .logo {
+                max-height: 30px
+            }
+
+        .main-nav {
+            margin-left: auto; 
+            display: flex;
+            gap: 28px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-left: 12px;
+        }
+
+        .btn {
+            border-radius: 999px;
+            padding: 10px 16px;
+            border: 1px solid #e5e7eb
+        }
+
+            .btn.solid {
+                background: var(--accent-600);
+                color: #fff;
+                border-color: transparent
+            }
+
+        .hero-head {
+            padding: 60px 20px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            align-items: center
+        }
+
+            .hero-grid .card {
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(0,0,0,.06);
+                overflow: hidden;
+                background: #fff;
+                display: grid;
+                place-items: center
+            }
+
+            .hero-grid img {
+                width: 100%;
+                height: 280px;
+                object-fit: cover;
+                display: block
+            }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 20px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px
+        }
+
+        .benefit {
+            background: #fff;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.05)
+        }
+
+        .promo {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 24px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            align-items: center
+        }
+
+            .promo .checks {
+                list-style: none;
+                padding: 0;
+                margin: 0
+            }
+
+                .promo .checks li {
+                    margin: .35rem 0;
+                    position: relative;
+                    padding-left: 1.4rem
+                }
+
+                    .promo .checks li::before {
+                        content: "✔";
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        color: var(--accent-600)
+                    }
+
+            .promo .video iframe {
+                width: 100%;
+                height: 315px;
+                border: 0
+            }
+
+        .cta-strip {
+            background: color-mix(in srgb, var(--accent-400) 18%, white);
+            padding: 14px 0;
+            margin: 0px 0
+        }
+
+        .cta-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0px;
+            align-items: center;
+            padding: 0 20px
+        }
+
+        .site-footer {
+            background: #0f172a; /* tmavé pozadí */
+            color: #e5e7eb;
+            margin-top: 0;
+        }
+
+        .footer-wrap {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto; /* centrování obsahu jako na tvém vzoru */
+            padding: 48px 24px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(5,minmax(180px,1fr)); /* 5 sloupců */
+            gap: 32px;
+            align-items: start;
+        }
+
+        .fcol h4 {
+            margin: 0 0 .75rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: .03em;
+            color: #f1f5f9;
+        }
+
+        .fcol ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+
+        .fcol li {
+            color: #cbd5e1;
+            line-height: 1.5;
+            word-break: break-word; /* aby dlouhé položky nepřetékal */
+        }
+
+        /* sociální ikony – malé a v řadě */
+        .footer-socials {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+            .footer-socials img {
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+                display: block;
+            }
+
+        /* subfooter přes celou šířku pod sloupci */
+        .subfooter__note {
+            grid-column: 1 / -1;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            text-align: center;
+            opacity: .8;
+        }
+
+        /* responzivita */
+        @media (max-width:1024px) {
+            .footer-wrap {
+                grid-template-columns: repeat(3,minmax(160px,1fr));
+            }
+        }
+
+        @media (max-width:640px) {
+            .footer-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-socials {
+                justify-content: flex-start;
+            }
+        }
+
+       
+        
+    </style>
+<style>:root{--accent-600:#5a189a;--accent-400:#9d4edd;--bg:#ffffff;--text:#1b1b1b;--muted:#6d6d6d;}</style></head>
+<body>
+
+    <div class="announce" data-ai="announceText">Zjistěte více o těchto elegantních a záhadných společnících.</div>
+
+    <header class="site-header">
+        <img class="logo" src="/Loga/logo_3.png" alt="logo">
+        <nav class="main-nav"><span>Domů</span><span>O nás</span><span>Plemena</span><span>Zdraví</span><span>Adopce</span><span>Galerie</span></nav>
+        <div class="actions"><button class="btn">Přihlásit se</button><button class="btn solid">Adoptovat kočku</button></div>
+    </header>
+
+    <main>
+        <section class="hero-head">
+            <h1 data-ai="title">Svět koček</h1>
+            <p class="lead" data-ai="subtitle">Kočky - půvabné, moudré a nezávislé.</p>
+            <button class="btn solid" data-ai="ctaText">Zjistěte více</button>
+        </section>
+
+        <section class="hero-grid">
+            <figure class="card left"><img src="https://pixabay.com/get/g8f0dfd0dc2cfa125cf0c0420bc8a1fed9046ea4d90d6236314eddeafed40c64962eb393c7a0ad674a3aebd2c026c1706a4bd72b39080968996cc2746d08cba7c_640.jpg" alt="cat resting" data-ai-img="heroLeft" alt="cat resting"></figure>
+            <figure class="card center">
+                <img src="https://pixabay.com/get/ga281a5d56a3df4cb0621f2087d05da87d67c201e7f37875a4c48e381bfaa38709308f478b656d43ee6681f63c1427d7dc9acfe627746cf96fbf65a16bf731275_640.jpg" alt="cute cat closeup" data-ai-img="heroMain" alt="cute cat closeup">
+                <figcaption style="padding:14px 16px;text-align:center">
+                    <h3 data-ai="heroHeadline">Kočky – vaši tajemní společníci</h3>
+                    <p data-ai="heroLead">Objevte fascinující svět koček. Od jejich historie až po tipy, jak je správně chovat.</p>
+                </figcaption>
+            </figure>
+            <figure class="card right"><img src="https://pixabay.com/get/gf6638fc87b16138ca065071253dd1dd69e2b55298d72705d88832ccce71956e52a7bedb68546890fab6fc627fc181d06765fbaabc027b714791549ebe037d2a6_640.jpg" alt="happy cat playing" data-ai-img="heroRight" alt="happy cat playing"></figure>
+        </section>
+
+        <section class="benefits">
+            <div class="benefit"><h4 data-ai="benefit1Title">Zdraví a péče</h4><p data-ai="benefit1Text">Jak zajistit kočkám zdravý a šťastný život.</p></div>
+            <div class="benefit"><h4 data-ai="benefit2Title">Známá i vzácná plemena</h4><p data-ai="benefit2Text">Přehled kočičích plemen a jejich specifik.</p></div>
+            <div class="benefit"><h4 data-ai="benefit3Title">Adopce</h4><p data-ai="benefit3Text">Najděte si svého nového čtyřnohého přítele.</p></div>
+        </section>
+
+        <section class="promo">
+            <div class="promo-text">
+                <h2 data-ai="promoTitle">Zamilujte si kočky!</h2>
+                <p class="lead" data-ai="promoLead">Chcete vědět více o svém chlupatém příteli? Sledujte naše zajímavé články a tipy.</p>
+                <ul class="checks" data-ai-list="promoBenefits"><li>Kočky jsou skvělí společníci.</li><li>Velký výběr plemen a charakterů.</li><li>Jednoduchá adopce koček.</li></ul>
+                <div class="promo-actions" style="display:flex;gap:10px;margin-top:10px">
+                    <button class="btn solid" data-ai="promoPrimary">Prohlédněte si články</button>
+                    <button class="btn" data-ai="promoSecondary">Kontaktujte nás</button>
+                </div>
+            </div>
+            <div class="video">
+                <!-- Klíč jen uložíme; tvoje služba pak nahradí na skutečné embed URL -->
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/RefIZ5PeiTs" frameborder="0" allowfullscreen></iframe></iframe>
+            </div>
+        </section>
+
+        <section class="cta-strip">
+            <div class="cta-wrap">
+                <p class="cta-text" data-ai="stripText">Hledáte kočku? U nás možná najdete tu pravou.</p>
+                <button class="btn solid" data-ai="stripBtn">Adoptujte teď</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="footer">
+        <div class="footer-wrap">
+            <div class="fcol" id="f-col1">
+                <h4 id="f-col1-title">O webu</h4>
+                <ul id="f-col1-list"><li><span>Naše mise</span></li><li><span>Tým</span></li><li><span>Kontakt</span></li></ul>
+            </div>
+
+            <div class="fcol" id="f-col2">
+                <h4 id="f-col2-title">Obsah</h4>
+                <ul id="f-col2-list"><li><span>Články</span></li><li><span>Galerie</span></li><li><span>Plemena</span></li></ul>
+            </div>
+
+            <div class="fcol" id="f-col3">
+                <h4 id="f-col3-title">Podpora</h4>
+                <ul id="f-col3-list"><li><span>Adopce</span></li><li><span>Péče o zdraví</span></li><li><span>Často kladené dotazy</span></li></ul>
+            </div>
+
+            <div class="fcol" id="f-col4">
+                <h4 id="f-col4-title">Pro uživatele</h4>
+                <ul id="f-col4-list"><li><span>Přihlášení</span></li><li><span>Registrace</span></li><li><span>Osobní účet</span></li></ul>
+            </div>
+
+            <div class="fcol" id="f-col5">
+                <h4 id="f-col5-title">Spojte se s námi</h4>
+                <ul id="f-col5-list"><li><span>Facebook</span></li><li><span>Instagram</span></li><li><span>YouTube</span></li></ul>
+
+                <!-- sociální ikony klidně nech v 5. sloupci -->
+                <div id="footer-socials" class="footer-socials"><img src="https://pixabay.com/get/ga1b8f26f873222a43be9ad90dae1432a7e1b9165fa991c3a93bd5d0c317b1fda069858b28e6569ebeb3dce6928dbc7d890cb47a570f5db0369c12e02bc51925e_640.jpg" alt="facebook logo icon transparent" alt="Facebook"><img src="https://pixabay.com/get/g7dac335058412174afa3b6a71bc37c3492b7abd405eebb1fcd2c039d669e8878d152c1afc5c9c2d80d23d145acc31eb0d22b8ecacc8a4b7df791fb3cb56b5ee8_640.jpg" alt="youtube logo icon transparent" alt="YouTube"><img src="https://pixabay.com/get/gf62d7a8a060dcef5652aa5689ada3db543a2558fa8ac36e3d0417a89755851f52ba65a401f8d1b174881a0553602ab71a5c47edac7d88bddf4e0a2ac5b43e1a3_640.jpg" alt="linkedin logo icon transparent" alt="LinkedIn"></div>
+            </div>
+
+            <!-- řádek přes celou šířku pod sloupci -->
+            <div id="subnote" class="subfooter__note">© 2023 Svět koček. Všechna práva vyhrazena.</div>
+        </div>
+    </footer>
+
+
+
+</body></html>

@@ -1,0 +1,31 @@
+﻿.nav-elev {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    backdrop-filter: saturate(140%) blur(2px);
+}
+
+.navbar .nav-link {
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+}
+
+    .navbar .nav-link.active,
+    .navbar .nav-link:hover {
+        background: rgba(0,0,0,.04);
+    }
+
+.navbar-brand img {
+    box-shadow: 0 0 0 1px rgba(0,0,0,.06);
+}
+
+:root {
+    --navbar-height: 64px;
+    --navbar-gap: 16px;
+}
+/* Ikony na tlačítku: měsíc v light, slunce v dark */
+
+
+.navbar-spacer {
+    height: calc(var(--navbar-height) + var(--navbar-gap));
+}

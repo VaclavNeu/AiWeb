@@ -1,0 +1,354 @@
+<html lang="cs"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title data-ai="pageTitle">Vše o psech</title>
+
+    <!-- volitelné: pokud máš base.css -->
+    <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+        /* Barvy dosadíme přes :root (přepíšeme injekcí ve službě) */
+        :root {
+            --accent-600: #2563eb;
+            --accent-400: #60a5fa;
+            --bg: #ffffff;
+            --text: #111827;
+            --muted: #6b7280;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui,Arial,sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            line-height: 1.6
+        }
+
+        .announce {
+            background: var(--accent-400);
+            color: #fff;
+            padding: 8px 0;
+            text-align: center
+        }
+
+        .site-header {
+            display: flex;
+            gap: 20px; 
+            align-items: center;
+            padding: 14px 20px;
+            background: #fff
+        }
+
+            .site-header .logo {
+                max-height: 30px
+            }
+
+        .main-nav {
+            margin-left: auto; 
+            display: flex;
+            gap: 28px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-left: 12px;
+        }
+
+        .btn {
+            border-radius: 999px;
+            padding: 10px 16px;
+            border: 1px solid #e5e7eb
+        }
+
+            .btn.solid {
+                background: var(--accent-600);
+                color: #fff;
+                border-color: transparent
+            }
+
+        .hero-head {
+            padding: 60px 20px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.8fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            align-items: center
+        }
+
+            .hero-grid .card {
+                border-radius: 16px;
+                box-shadow: 0 10px 30px rgba(0,0,0,.06);
+                overflow: hidden;
+                background: #fff;
+                display: grid;
+                place-items: center
+            }
+
+            .hero-grid img {
+                width: 100%;
+                height: 280px;
+                object-fit: cover;
+                display: block
+            }
+
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 20px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px
+        }
+
+        .benefit {
+            background: #fff;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.05)
+        }
+
+        .promo {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 24px;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+            align-items: center
+        }
+
+            .promo .checks {
+                list-style: none;
+                padding: 0;
+                margin: 0
+            }
+
+                .promo .checks li {
+                    margin: .35rem 0;
+                    position: relative;
+                    padding-left: 1.4rem
+                }
+
+                    .promo .checks li::before {
+                        content: "✔";
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        color: var(--accent-600)
+                    }
+
+            .promo .video iframe {
+                width: 100%;
+                height: 315px;
+                border: 0
+            }
+
+        .cta-strip {
+            background: color-mix(in srgb, var(--accent-400) 18%, white);
+            padding: 14px 0;
+            margin: 0px 0
+        }
+
+        .cta-wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0px;
+            align-items: center;
+            padding: 0 20px
+        }
+
+        .site-footer {
+            background: #0f172a; /* tmavé pozadí */
+            color: #e5e7eb;
+            margin-top: 0;
+        }
+
+        .footer-wrap {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto; /* centrování obsahu jako na tvém vzoru */
+            padding: 48px 24px;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: repeat(5,minmax(180px,1fr)); /* 5 sloupců */
+            gap: 32px;
+            align-items: start;
+        }
+
+        .fcol h4 {
+            margin: 0 0 .75rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: .03em;
+            color: #f1f5f9;
+        }
+
+        .fcol ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+
+        .fcol li {
+            color: #cbd5e1;
+            line-height: 1.5;
+            word-break: break-word; /* aby dlouhé položky nepřetékal */
+        }
+
+        /* sociální ikony – malé a v řadě */
+        .footer-socials {
+            margin-top: 12px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+            .footer-socials img {
+                width: 26px;
+                height: 26px;
+                border-radius: 50%;
+                display: block;
+            }
+
+        /* subfooter přes celou šířku pod sloupci */
+        .subfooter__note {
+            grid-column: 1 / -1;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            text-align: center;
+            opacity: .8;
+        }
+
+        /* responzivita */
+        @media (max-width:1024px) {
+            .footer-wrap {
+                grid-template-columns: repeat(3,minmax(160px,1fr));
+            }
+        }
+
+        @media (max-width:640px) {
+            .footer-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-socials {
+                justify-content: flex-start;
+            }
+        }
+
+       
+        
+    </style>
+<style>:root{--accent-600:#1c64f2;--accent-400:#93c5fd;--bg:#ffffff;--text:#000000;--muted:#6b7280;}</style></head>
+<body>
+
+    <div class="announce" data-ai="announceText">Pečujte o svého nejlepšího přítele</div>
+
+    <header class="site-header">
+        <img class="logo" src="/Loga/logo_3.png" alt="logo">
+        <nav class="main-nav"><span>Domů</span><span>O nás</span><span>Služby</span><span>Galerie</span><span>Blog</span><span>Kontakt</span></nav>
+        <div class="actions"><button class="btn">Přihlásit se</button><button class="btn solid">Koupit</button></div>
+    </header>
+
+    <main>
+        <section class="hero-head">
+            <h1 data-ai="title">Zlepšete život svému psovi</h1>
+            <p class="lead" data-ai="subtitle">Praktické rady, produkty a tipy pro šťastný a zdravý život vašeho psího společníka.</p>
+            <button class="btn solid" data-ai="ctaText">Prohlédnout nabídku</button>
+        </section>
+
+        <section class="hero-grid">
+            <figure class="card left"><img src="https://pixabay.com/get/g732d745e53a476f0e4be0b8d363714bb48d7893743a85d1cfb3620b047f975b256277efc99c6a898a06193a7e36d7ddd4b40741076bbc4985c77ff6f0010deef_640.jpg" alt="dog food" data-ai-img="heroLeft" alt="dog food"></figure>
+            <figure class="card center">
+                <img src="https://pixabay.com/get/g5986dac7024092b4050399a20ae577e4c52326cb4d217c87dc36f401676557bc842431be73ad3e1d16b41ccccb84567ed2b95c98def59d3c38b1b1e0fb5146fd_640.jpg" alt="happy dog" data-ai-img="heroMain" alt="happy dog">
+                <figcaption style="padding:14px 16px;text-align:center">
+                    <h3 data-ai="heroHeadline">Psi –  naši věrní společníci</h3>
+                    <p data-ai="heroLead">Poskytněte svému psímu příteli vše, co potřebuje k plnohodnotnému a šťastnému životu. U nás najdete rady, inspiraci i produkty, které hledáte.</p>
+                </figcaption>
+            </figure>
+            <figure class="card right"><img src="https://pixabay.com/get/gd964494aeab9f3d5f55b77a59f5f957eb86ef3ad029abf1926b40a6807467f76a0b5c9818de2bfccb27483589086655a8a653180e9403b1a79cfab86b765422b_640.jpg" alt="dog playing" data-ai-img="heroRight" alt="dog playing"></figure>
+        </section>
+
+        <section class="benefits">
+            <div class="benefit"><h4 data-ai="benefit1Title">Profesionální poradenství</h4><p data-ai="benefit1Text">Zjistěte, jak správně pečovat o svého psa, od výživy až po trénink.</p></div>
+            <div class="benefit"><h4 data-ai="benefit2Title">Špičkové produkty</h4><p data-ai="benefit2Text">Široká nabídka kvalitních krmiv, hraček a doplňků pro psy.</p></div>
+            <div class="benefit"><h4 data-ai="benefit3Title">Komunita majitelů psů</h4><p data-ai="benefit3Text">Připojte se k naší komunitě a sdílejte své zážitky a zkušenosti.</p></div>
+        </section>
+
+        <section class="promo">
+            <div class="promo-text">
+                <h2 data-ai="promoTitle">Pečujte o psa snadno a efektivně</h2>
+                <p class="lead" data-ai="promoLead">Přinášíme vám ověřené tipy a inspirace, díky kterým bude péče o psa radost.</p>
+                <ul class="checks" data-ai-list="promoBenefits"><li>Výživové poradenství od odborníků.</li><li>Bezpečné a pohodlné vybavení.</li><li>Inspirativní příběhy a tipy od ostatních majitelů.</li></ul>
+                <div class="promo-actions" style="display:flex;gap:10px;margin-top:10px">
+                    <button class="btn solid" data-ai="promoPrimary">Zjistit více</button>
+                    <button class="btn" data-ai="promoSecondary">Kontaktujte nás</button>
+                </div>
+            </div>
+            <div class="video">
+                <!-- Klíč jen uložíme; tvoje služba pak nahradí na skutečné embed URL -->
+                <iframe width="100%" height="315" src="https://www.youtube.com/embed/cXN8Obr1yss" frameborder="0" allowfullscreen></iframe></iframe>
+            </div>
+        </section>
+
+        <section class="cta-strip">
+            <div class="cta-wrap">
+                <p class="cta-text" data-ai="stripText">Objevte vše pro svého psího společníka na jednom místě.</p>
+                <button class="btn solid" data-ai="stripBtn">Nakupovat nyní</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="footer">
+        <div class="footer-wrap">
+            <div class="fcol" id="f-col1">
+                <h4 id="f-col1-title">O nás</h4>
+                <ul id="f-col1-list"><li><span>Naše mise</span></li><li><span>Náš tým</span></li><li><span>Kariéra</span></li></ul>
+            </div>
+
+            <div class="fcol" id="f-col2">
+                <h4 id="f-col2-title">Služby</h4>
+                <ul id="f-col2-list"><li><span>Poradenství</span></li><li><span>Produkty</span></li><li><span>Komunita</span></li></ul>
+            </div>
+
+            <div class="fcol" id="f-col3">
+                <h4 id="f-col3-title">Zdroje</h4>
+                <ul id="f-col3-list"><li><span>Blog</span></li><li><span>Časté dotazy</span></li><li><span>Kontakt</span></li></ul>
+            </div>
+
+            <div class="fcol" id="f-col4">
+                <h4 id="f-col4-title">Právní informace</h4>
+                <ul id="f-col4-list"><li><span>Obchodní podmínky</span></li><li><span>Ochrana osobních údajů</span></li><li><span>Podmínky použití</span></li></ul>
+            </div>
+
+            <div class="fcol" id="f-col5">
+                <h4 id="f-col5-title">Kontakt</h4>
+                <ul id="f-col5-list"><li><span>Email: info@psiweb.cz</span></li><li><span>Tel: +420 123 456 789</span></li><li><span>Adresa: Útulná 12, Praha</span></li></ul>
+
+                <!-- sociální ikony klidně nech v 5. sloupci -->
+                <div id="footer-socials" class="footer-socials"><img src="https://pixabay.com/get/ga1b8f26f873222a43be9ad90dae1432a7e1b9165fa991c3a93bd5d0c317b1fda069858b28e6569ebeb3dce6928dbc7d890cb47a570f5db0369c12e02bc51925e_640.jpg" alt="facebook logo icon transparent" alt="Facebook"><img src="https://pixabay.com/get/g7dac335058412174afa3b6a71bc37c3492b7abd405eebb1fcd2c039d669e8878d152c1afc5c9c2d80d23d145acc31eb0d22b8ecacc8a4b7df791fb3cb56b5ee8_640.jpg" alt="youtube logo icon transparent" alt="YouTube"><img src="https://pixabay.com/get/gf62d7a8a060dcef5652aa5689ada3db543a2558fa8ac36e3d0417a89755851f52ba65a401f8d1b174881a0553602ab71a5c47edac7d88bddf4e0a2ac5b43e1a3_640.jpg" alt="linkedin logo icon transparent" alt="LinkedIn"></div>
+            </div>
+
+            <!-- řádek přes celou šířku pod sloupci -->
+            <div id="subnote" class="subfooter__note">© 2023 PsiWeb. Všechna práva vyhrazena.</div>
+        </div>
+    </footer>
+
+
+
+</body></html>

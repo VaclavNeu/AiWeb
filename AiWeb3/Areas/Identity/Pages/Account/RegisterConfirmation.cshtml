@@ -1,0 +1,28 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Register confirmation";
+}
+
+<h1>@ViewData["Title"]</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+<p>
+           Pokud vám nepřišel přihlašovací odkaz, klikněte 
+           <a asp-area="Identity"
+              asp-page="/Account/ResendEmailConfirmation"
+              asp-route-email="@Model.Email">
+              zde.
+              </a>
+              
+</p>
+    }
+    else
+    {
+<p>
+        Please check your email to confirm your account.
+</p>
+    }
+}
+

@@ -1,0 +1,208 @@
+﻿/* LIGHT */
+[data-bs-theme="light"] {
+    --app-bg: #ffffff;
+    --app-text: #111827;
+    --app-muted: #6b7280;
+    --app-surface: rgba(230,230,230,0.85); /* panel */
+    --app-border: rgba(0,0,0,0.08);
+    --nav-fg: #111; /* barva textu v navu */
+    --nav-accent: #0d6efd; /* akcent (ikony, okraje) */
+    --nav-btn-bg: rgba(13,110,253,.10);
+    --nav-btn-bg-hover: rgba(13,110,253,.18);
+    --nav-border: rgba(13,110,253,.45);
+    --nav-link-bg: rgba(0,0,0,.06); /* pozadí pro active/hover */
+    --nav-link-bg-hover: rgba(13,110,253,.12);
+
+    --hero-surface: rgba(255, 255, 255, 0.95);
+    --hero-border: rgba(15, 23, 42, 0.06);
+    --hero-shadow: rgba(15, 23, 42, 0.12);
+
+    --footer-surface: rgba(230, 230, 230, .95);
+    --footer-text: #111827;
+    --footer-border: rgba(0, 0, 0, .18);
+}
+
+/* DARK */
+[data-bs-theme="dark"] {
+    /* ZÁKLAD A TEXT */
+    --app-surface: rgba(40,42,72, .82); /* hlavní pozadí (navy) */
+    --app-bg: rgba(30, 58, 138, .22);
+    --app-text: #dbe4ff; /* světle modrý text */
+    --app-muted: rgba(148, 163, 184, .65);
+    --app-border: rgba(203, 213, 225, .16);
+    /* NAV/AKCENTY */
+    --nav-fg: rgba(230,230,230);
+    --nav-accent: #60a5fa; /* akcent (ikony/hranice) */
+    --nav-border: rgba(230,230,230,.55);
+    /* tlačítka/odkazy v navigaci */
+    --nav-link-bg: rgba(255,255,255,.07);
+    --nav-link-bg-hover: rgba(59,130,246,.18);
+    --nav-btn-bg: rgba(59,130,246,.14);
+    --nav-btn-bg-hover: rgba(59,130,246,.24);
+
+    --bs-body-bg: var(--app-surface);
+    --bs-body-color: var(--app-text);
+    --bs-secondary-color: var(--app-muted);
+    --bs-border-color: var(--app-border);
+    --bs-primary: #3b82f6;
+    --bs-link-color: #8ab4ff;
+    --bs-link-hover-color: #bcd1ff;
+
+    --hero-surface: rgba(18, 22, 40, 0.92);
+    --hero-border: rgba(96, 165, 250, 0.14);
+    --hero-shadow: rgba(0, 0, 0, 0.35);
+
+    --footer-surface: rgba(22, 26, 44, .95);
+    --footer-text: rgba(219, 228, 255, 1);
+    --footer-border: rgba(96, 165, 250, .18);
+
+    
+}
+
+[data-bs-theme="light"] .nav-blur {
+    background: rgba(230,230,230);
+    color: #111;
+    border-bottom: 1px solid var(--app-border);
+}
+
+[data-bs-theme="dark"] .nav-blur {
+    background: rgba(22, 26, 44);
+    color: #fff;
+    border-bottom: 1px solid transparent;
+}
+
+
+/* drobné vyhlazení vzhledu navbaru napříč módy */
+.nav-elev {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    backdrop-filter: saturate(140%) blur(2px);
+}
+
+.navbar .nav-link {
+    color: var(--nav-fg) !important;
+    padding: .5rem .75rem;
+    border-radius: .5rem;
+}
+
+    .navbar .nav-link.active,
+    .navbar .nav-link:hover,
+    .navbar .nav-link:focus {
+        background: transparent;
+    }
+.navbar .nav-link.active:hover {
+     background: var(--nav-link-bg-hover);
+ }
+
+
+.card-hero {
+    background: var(--hero-surface);
+    border: 1px solid var(--hero-border);
+    color: var(--app-text);
+    box-shadow: 0 .75rem 1.5rem var(--hero-shadow);
+}
+
+.nav-btn{
+   
+}
+
+
+.hero-panel {
+    background: var(--hero-surface);
+    border: 1px solid var(--hero-border);
+    box-shadow: 0 1.25rem 2.5rem var(--hero-shadow);
+    backdrop-filter: blur(6px);
+}
+
+html, body {
+    overflow-x: clip;
+}
+
+
+
+
+.brand-title {
+    color: var(--nav-fg) !important;
+    font-weight: 700;
+    letter-spacing: .2px;
+    text-decoration: none;
+    /* hezké responsivní měřítko */
+    font-size: clamp(1.05rem, 0.9rem + 0.6vw, 1.35rem);
+}
+
+
+/* přepínání ikon a textů podle tématu */
+[data-bs-theme="light"] .icon-dark {
+    display: none !important;
+}
+
+[data-bs-theme="dark"] .icon-light {
+    display: none !important;
+}
+
+[data-bs-theme="light"] .label-dark {
+    display: none !important;
+}
+
+[data-bs-theme="dark"] .label-light {
+    display: none !important;
+}
+
+
+:root {
+    --footer-h: 140px;
+}
+
+
+
+
+.app-shell {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+    .app-shell main {
+        flex: 1 0 auto;
+    }
+
+:root {
+    --footer-h: 140px;
+}
+
+.app-footer {
+    height: var(--footer-h);
+    min-height: var(--footer-h);
+    flex: 0 0 var(--footer-h);
+    box-sizing: border-box;
+    background: var(--footer-surface);
+    color: var(--footer-text);
+    border-top: 1px solid var(--footer-border);
+}
+
+    .app-footer .container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+/* pro jistotu, když by někde nebyl flex wrapper */
+html, body {
+    min-height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
